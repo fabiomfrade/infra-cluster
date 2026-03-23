@@ -1,34 +1,24 @@
-# Retornos do cluster
 output "cluster_name" {
-  description = "Nome do cluster"
-  value       = aws_eks_cluster.this.name
+  value = var.create_eks ? module.eks[0].cluster_name : null
 }
 
 output "endpoint" {
-  description = "Endpoint da API do cluster"
-  value       = aws_eks_cluster.this.endpoint
+  value = var.create_eks ? module.eks[0].cluster_endpoint : null
 }
 
 output "cluster_certificate" {
-  description = "Certificado CA do cluster em base64"
-  value       = aws_eks_cluster.this.certificate_authority[0].data
-  sensitive   = true
+  value     = var.create_eks ? module.eks[0].cluster_certificate : null
+  sensitive = true
 }
 
 output "cluster_sg" {
-  description = "ID do SG do cluster"
-  value       = aws_security_group.eks_cluster.id
+  value = var.create_securitygroups ? module.securitygroups[0].cluster_sg_id : null
 }
-
-# Retornos do Node Group
 
 output "node_group_name" {
-  description = "Nome do Node Group"
-  value       = aws_eks_node_group.managed_nodes.node_group_name
+  value = var.create_nodegroup ? module.nodegroup[0].node_group_name : null
 }
 
-# Helper para conexão com o cluster
 output "kubeconfig" {
-  description = "Comando para configurar o kubeconfig local"
-  value       = "aws eks update-kubeconfig --region ${var.regiao} --name ${aws_eks_cluster.this.name}"
+  value = var.create_eks ? "aws eks update-kubeconfig --region ${var.regiao} --name ${module.eks[0].cluster_name}" : null
 }

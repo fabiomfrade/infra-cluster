@@ -1,21 +1,22 @@
-# Variáveis do provedor
+# Variáveis de provedor
 regiao = "us-east-1"
 perfil = "terraform"
 
-# Identificação do projeto
-project_name = "eks-dev"
+# Seleção de recursos a serem criados
+create_subnet_infra   = false
+create_iam            = true
+create_securitygroups = true
+create_eks            = true
+create_nodegroup      = true
 
-# Rede (mantendo 3 AZs / 3 subnets públicas e 3 privadas)
-vpc_cidr = "10.10.0.0/16"
+# Parâmetros adicionais de configuração
 
-public_subnets_cidrs  = ["10.10.1.0/24", "10.10.2.0/24", "10.10.3.0/24"]
-private_subnets_cidrs = ["10.10.11.0/24", "10.10.12.0/24", "10.10.13.0/24"]
-
-# EKS
+project_name = "case-sre"
 eks_cluster_version = "1.34"
 
-# Nodes
-node_instance_type = "t3.medium"
-desired_capacity   = 3
-min_size           = 3
-max_size           = 6
+# Variáveis de fallback
+# Exemplo de parâmetros de Rede
+
+existing_vpc_id            = "vpc-1234567890"
+existing_private_subnet_ids = ["subnet-aaa", "subnet-bbb", "subnet-ccc"]
+existing_public_subnet_ids  = ["subnet-xxx", "subnet-yyy", "subnet-zzz"]
